@@ -6,5 +6,4 @@ public interface UserGateway {
     UserDomain returnUserById(Long id);
     UserDomain returnUserByEmail(String email);
     UserDomain createUser(UserDomain userDomain);
-    UserDomain updatePassword(UserDomain userDomain);
 }

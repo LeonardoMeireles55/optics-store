@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.leonardo.optics.store.application.gateways.UserGateway;
 import com.leonardo.optics.store.application.usecases.CreateUserInteractor;
+import com.leonardo.optics.store.application.usecases.ReturnUserByIdInteractor;
 import com.leonardo.optics.store.infra.controllers.mapper.UserDTOMapper;
 import com.leonardo.optics.store.infra.gateways.UserEntityMapper;
 import com.leonardo.optics.store.infra.gateways.UserRepositoryGateway;
@@ -15,6 +16,11 @@ public class UserConfig {
     @Bean
     CreateUserInteractor createUserCase(UserGateway userGateway) {
         return new CreateUserInteractor(userGateway);
+    }
+
+    @Bean
+    ReturnUserByIdInteractor returnUserByIdCase(UserGateway userGateway) {
+        return new ReturnUserByIdInteractor(userGateway);
     }
 
 
