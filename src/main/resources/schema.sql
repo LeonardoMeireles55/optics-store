@@ -1,15 +1,15 @@
-CREATE TABLE IF NOT EXISTS `USERS` (
-  id bigint AUTO_INCREMENT primary key,
-  firstname varchar(255) not null,
-  lastname varchar(255) not null,
-  password varchar(255) not null,
-  email varchar(255) not null,
-  cep varchar(255) not null,
-  address varchar(255) not null,
-  telephone varchar(255) not null,
-  cpf varchar(255) not null,
-  role varchar(255) not null default 'USER'
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    password VARCHAR(255),
+    email VARCHAR(255),
+    cep VARCHAR(20),
+    address VARCHAR(255),
+    telephone VARCHAR(20),
+    cpf VARCHAR(20),
+    role VARCHAR(50)
 );
 
-INSERT INTO `users` (firstname, lastname, password, email, cep, address, telephone, cpf, role)
+INSERT INTO `users` (first_name, last_name, password, email, cep, address, telephone, cpf, role)
  VALUES ('admin', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 'ADMIN');

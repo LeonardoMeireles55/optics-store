@@ -1,6 +1,7 @@
 package com.leonardo.optics.store.infra.persistence;
 
 import com.leonardo.optics.store.infra.constants.Roles;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 

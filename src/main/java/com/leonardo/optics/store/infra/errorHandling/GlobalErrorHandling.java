@@ -5,10 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -63,26 +59,26 @@ public class GlobalErrorHandling {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> ErrorBadCredentials() {
-        log.error("UNAUTHORIZED: Invalid credentials.");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-    }
+    // @ExceptionHandler(BadCredentialsException.class)
+    // @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    // public ResponseEntity<String> ErrorBadCredentials() {
+    //     log.error("UNAUTHORIZED: Invalid credentials.");
+    //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+    // }
 
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<String> ErrorAuthentication() {
-        log.error("UNAUTHORIZED: Auth failed");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Auth failed");
-    }
+    // @ExceptionHandler(AuthenticationException.class)
+    // @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    // public ResponseEntity<String> ErrorAuthentication() {
+    //     log.error("UNAUTHORIZED: Auth failed");
+    //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Auth failed");
+    // }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<String> AccessDenied() {
-        log.error("FORBIDDEN: Access denied");
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-    }
+    // @ExceptionHandler(AccessDeniedException.class)
+    // @ResponseStatus(HttpStatus.FORBIDDEN)
+    // public ResponseEntity<String> AccessDenied() {
+    //     log.error("FORBIDDEN: Access denied");
+    //     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+    // }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -107,11 +103,11 @@ public class GlobalErrorHandling {
         return new ResponseEntity<>(ErrorMessage, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(InternalAuthenticationServiceException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleInternalAuthenticationServiceException(InternalAuthenticationServiceException exception) {
-        String ErrorMessage = "An error occurred while authenticating the user, Please try again later";
-        log.error("INTERNAL_SERVER_ERROR: {}", ErrorMessage);
-        return new ResponseEntity<>(ErrorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    // @ExceptionHandler(InternalAuthenticationServiceException.class)
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // public ResponseEntity<String> handleInternalAuthenticationServiceException(InternalAuthenticationServiceException exception) {
+    //     String ErrorMessage = "An error occurred while authenticating the user, Please try again later";
+    //     log.error("INTERNAL_SERVER_ERROR: {}", ErrorMessage);
+    //     return new ResponseEntity<>(ErrorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
 }
