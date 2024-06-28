@@ -1,5 +1,6 @@
 package com.leonardo.optics.store.main;
 
+import com.leonardo.optics.store.application.usecases.AddUserDepententsInteractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,6 +22,11 @@ public class UserConfig {
     @Bean
     ReturnUserByIdInteractor returnUserByIdCase(UserGateway userGateway) {
         return new ReturnUserByIdInteractor(userGateway);
+    }
+
+    @Bean
+    AddUserDepententsInteractor addUserDependentsCase(UserGateway userGateway) {
+        return new AddUserDepententsInteractor(userGateway);
     }
 
 

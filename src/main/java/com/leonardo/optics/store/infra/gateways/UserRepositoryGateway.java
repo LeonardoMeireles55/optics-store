@@ -24,6 +24,20 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
+    public void addDependent(Long userId, Long dependentId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        UserEntity dependentEntity = userRepository.findById(dependentId).orElseThrow();
+
+        if (userEntity == null || dependentEntity == null) {
+            throw new GlobalErrorHandling
+                    .ResourceNotFoundException("User not found");
+        }
+        userRepository.addDependent(userId, dependentId);
+
+    }
+
+
+    @Override
     public UserDomain returnUserById(Long id) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow();
         return userEntityMapper.toDomain(userEntity);

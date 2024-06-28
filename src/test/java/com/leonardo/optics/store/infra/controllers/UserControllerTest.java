@@ -1,6 +1,7 @@
 package com.leonardo.optics.store.infra.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leonardo.optics.store.application.usecases.AddUserDepententsInteractor;
 import com.leonardo.optics.store.application.usecases.CreateUserInteractor;
 import com.leonardo.optics.store.application.usecases.ReturnUserByIdInteractor;
 import com.leonardo.optics.store.domain.UserDomain;
@@ -37,6 +38,9 @@ public class UserControllerTest {
 
     @MockBean
     private ReturnUserByIdInteractor returnUserByIdInteractor;
+
+    @MockBean
+    private AddUserDepententsInteractor addUserDepententsInteractor;
 
     @MockBean
     private UserDTOMapper userDTOMapper;
@@ -121,6 +125,15 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("John"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("Doe"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("john.doe@example.com"));
+    }
+
+    @Test
+    public void testAddDependent() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/addDependent")
+                        .param("userId", "1")
+                        .param("dependentId", "2")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     private String asJsonString(Object obj) {

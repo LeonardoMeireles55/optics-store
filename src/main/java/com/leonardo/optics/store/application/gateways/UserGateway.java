@@ -6,4 +6,5 @@ public interface UserGateway {
     UserDomain returnUserById(Long id);
     UserDomain returnUserByEmail(String email);
     UserDomain createUser(UserDomain userDomain);
+    void addDependent(Long userId, Long dependentId);
 }
