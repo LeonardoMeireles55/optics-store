@@ -4,7 +4,7 @@ import com.leonardo.optics.store.domain.UserDomain;
 import com.leonardo.optics.store.infra.persistence.UserEntity;
 
 public class UserEntityMapper {
-    UserDomain toDomain(UserEntity userEntityObj) {
+    public UserDomain toDomain(UserEntity userEntityObj) {
         return new UserDomain(
                 userEntityObj.getFirstName(),
                 userEntityObj.getLastName(),
@@ -14,11 +14,13 @@ public class UserEntityMapper {
                 userEntityObj.getAddress(),
                 userEntityObj.getTelephone(),
                 userEntityObj.getCpf(),
-                userEntityObj.getRole()
+                userEntityObj.getRole(),
+                userEntityObj.getUserDependentsIds().stream().toList()
         );
     }
 
-    UserEntity toEntity(UserDomain userDomainObj) {
+    public UserEntity toEntity(UserDomain userDomainObj) {
+
         return new UserEntity(
                 userDomainObj.firstName(),
                 userDomainObj.lastName(),
@@ -28,7 +30,8 @@ public class UserEntityMapper {
                 userDomainObj.address(),
                 userDomainObj.telephone(),
                 userDomainObj.cpf(),
-                userDomainObj.role()
+                userDomainObj.role(),
+                userDomainObj.userDependents().stream().toList()
         );
     }
 }

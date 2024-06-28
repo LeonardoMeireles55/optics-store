@@ -8,6 +8,7 @@ import com.leonardo.optics.store.infra.controllers.dtos.DefaultUserResp;
 import com.leonardo.optics.store.infra.controllers.dtos.ReturnUserByIdReq;
 import com.leonardo.optics.store.infra.controllers.mapper.UserDTOMapper;
 
+import com.leonardo.optics.store.infra.errorHandling.GlobalErrorHandling;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,9 +44,13 @@ public class UserController {
     }
 
     @GetMapping
-    public DefaultUserResp getUserById(@RequestParam ReturnUserByIdReq req) {
+    public DefaultUserResp getUserById(@RequestParam Long id) {
+        // Create a ReturnUserByIdReq instance or use the id directly as per your requirement
+        ReturnUserByIdReq req = new ReturnUserByIdReq(id);
         UserDomain user = returnUserByIdInteractor.getUserById(req.id());
-
+        if (user == null) {
+            throw new GlobalErrorHandling.ResourceNotFoundException("User not found");
+        }
         return userDTOMapper.toResponse(user);
     }
 

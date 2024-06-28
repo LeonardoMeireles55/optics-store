@@ -3,6 +3,8 @@ package com.leonardo.optics.store.infra.controllers.dtos;
 import com.leonardo.optics.store.infra.constants.Roles;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
+
 
 public record CreateUserReq(
         @NotBlank(message = "First name is mandatory")
@@ -37,6 +39,7 @@ public record CreateUserReq(
         String cpf,
 
         @NotNull(message = "Role is mandatory")
-        Roles role
+        Roles role,
+        List<Long> userDependents
 ) {
 }

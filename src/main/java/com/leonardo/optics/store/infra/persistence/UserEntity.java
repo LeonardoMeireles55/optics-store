@@ -1,12 +1,13 @@
 package com.leonardo.optics.store.infra.persistence;
 
 import com.leonardo.optics.store.infra.constants.Roles;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
+import java.util.List;
 
-@Table(name = "USERS")
+@Table("USERS")
 public class UserEntity {
     @Id
     private Long id;
@@ -20,12 +21,14 @@ public class UserEntity {
     private String cpf;
     private Roles role;
 
-    public UserEntity() {
+    @MappedCollection(idColumn = "USER_ID")
+    private List<Long> userDependentsIds;
 
+    public UserEntity() {
     }
 
     public UserEntity(String firstName, String lastName, String password, String email, String cep,
-                      String address, String telephone, String cpf, Roles role) {
+                      String address, String telephone, String cpf, Roles role, List<Long> userDependentsIds) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -35,21 +38,10 @@ public class UserEntity {
         this.telephone = telephone;
         this.cpf = cpf;
         this.role = role;
+        this.userDependentsIds = userDependentsIds;
     }
 
-    public UserEntity(String firstName, String lastName, String password, String email, String cep,
-                      String address, String telephone, String cpf) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.cep = cep;
-        this.address = address;
-        this.telephone = telephone;
-        this.cpf = cpf;
-        this.role = Roles.USER;
-    }
-
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -128,5 +120,13 @@ public class UserEntity {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public List<Long> getUserDependentsIds() {
+        return userDependentsIds;
+    }
+
+    public void setUserDependentsIds(List<Long> userDependentsIds) {
+        this.userDependentsIds = userDependentsIds;
     }
 }
