@@ -8,6 +8,8 @@ import com.leonardo.optics.store.infra.controllers.dtos.DefaultUserResp;
 import com.leonardo.optics.store.infra.controllers.dtos.ReturnUserByIdReq;
 import com.leonardo.optics.store.infra.controllers.mapper.UserDTOMapper;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("users")
+@Validated
 public class UserController {
     private final CreateUserInteractor createUserUseCase;
     private final ReturnUserByIdInteractor returnUserByIdInteractor;
@@ -31,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping
-    public DefaultUserResp createUser(@RequestBody CreateUserReq request) {
+    public DefaultUserResp createUser(@Valid @RequestBody CreateUserReq request) {
         UserDomain userDomain = userDTOMapper.toUser(request);
 
         UserDomain userCreated = createUserUseCase.createUser(userDomain);
