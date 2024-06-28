@@ -1,5 +1,6 @@
 package com.leonardo.optics.store.infra.controllers;
 
+import com.leonardo.optics.store.application.usecases.AddUserDepententsInteractor;
 import com.leonardo.optics.store.application.usecases.CreateUserInteractor;
 import com.leonardo.optics.store.application.usecases.ReturnUserByIdInteractor;
 import com.leonardo.optics.store.domain.UserDomain;
@@ -22,14 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users")
 @Validated
 public class UserController {
-    private final CreateUserInteractor createUserUseCase;
+    private final CreateUserInteractor createUserInteractor;
+
+    private final AddUserDepententsInteractor addUserDepententsInteractor;
+
     private final ReturnUserByIdInteractor returnUserByIdInteractor;
     private final UserDTOMapper userDTOMapper;
 
     public UserController(CreateUserInteractor createUserUseCase,
-    ReturnUserByIdInteractor returnUserByIdInteractor,
-     UserDTOMapper userDTOMapper) {
-        this.createUserUseCase = createUserUseCase;
+                          AddUserDepententsInteractor addDependentsUserCase,
+                          ReturnUserByIdInteractor returnUserByIdInteractor,
+                          UserDTOMapper userDTOMapper) {
+        this.createUserInteractor = createUserUseCase;
+        this.addUserDepententsInteractor = addDependentsUserCase;
         this.returnUserByIdInteractor = returnUserByIdInteractor;
         this.userDTOMapper = userDTOMapper;
     }
@@ -38,14 +44,18 @@ public class UserController {
     public DefaultUserResp createUser(@Valid @RequestBody CreateUserReq request) {
         UserDomain userDomain = userDTOMapper.toUser(request);
 
-        UserDomain userCreated = createUserUseCase.createUser(userDomain);
+        UserDomain userCreated = createUserInteractor.createUser(userDomain);
 
         return userDTOMapper.toResponse(userCreated);
     }
 
+    @PostMapping("/addDependent")
+    public void addDependent(@RequestParam Long userId, @RequestParam Long dependentId) {
+        addUserDepententsInteractor.addDependents(userId, dependentId);
+    }
+
     @GetMapping
     public DefaultUserResp getUserById(@RequestParam Long id) {
-        // Create a ReturnUserByIdReq instance or use the id directly as per your requirement
         ReturnUserByIdReq req = new ReturnUserByIdReq(id);
         UserDomain user = returnUserByIdInteractor.getUserById(req.id());
         if (user == null) {
